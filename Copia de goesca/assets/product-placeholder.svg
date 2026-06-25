@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="title desc">
+  <title id="title">Producto Goesca</title>
+  <desc id="desc">Imagen base para productos sin foto.</desc>
+  <rect width="600" height="600" fill="#fff8ed"/>
+  <circle cx="300" cy="245" r="130" fill="#0a7c86" opacity="0.12"/>
+  <path d="M190 398h220l-22 88H212z" fill="#f68b1f"/>
+  <path d="M225 398h150l-18-160c-4-37-34-66-72-66s-68 29-72 66z" fill="#ffffff" stroke="#0a7c86" stroke-width="18" stroke-linejoin="round"/>
+  <path d="M235 286h130" stroke="#f68b1f" stroke-width="24" stroke-linecap="round"/>
+  <path d="M248 332h104" stroke="#0a7c86" stroke-width="18" stroke-linecap="round" opacity="0.85"/>
+  <text x="300" y="105" fill="#162125" font-family="Arial, Helvetica, sans-serif" font-size="64" font-weight="800" text-anchor="middle">GOESCA</text>
+  <text x="300" y="545" fill="#6a7478" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" text-anchor="middle">Limpieza, calidad y confianza</text>
+</svg>

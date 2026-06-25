@@ -1,0 +1,12 @@
+<svg width="360" height="360" viewBox="0 0 360 360" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Logo Goesca</title>
+  <desc id="desc">Marca Goesca con una gota de limpieza y brillo.</desc>
+  <rect width="360" height="360" rx="72" fill="#0A7C86"/>
+  <path d="M180 58C180 58 103 143 103 216C103 263.22 137.474 298 180 298C222.526 298 257 263.22 257 216C257 143 180 58 180 58Z" fill="#F7FBFC"/>
+  <path d="M180 91C180 91 130 151.665 130 211.5C130 245.462 151.414 270 180 270C208.586 270 230 245.462 230 211.5C230 151.665 180 91 180 91Z" fill="#23B7A6"/>
+  <path d="M151 189C162.202 183.122 175.144 174.327 181.143 156C188.489 179.878 204.813 189.49 220 194C201.517 198.778 187.345 210.9 181 236C174.715 211.267 162.202 198.533 151 189Z" fill="#FFFFFF"/>
+  <path d="M95 84H147" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round"/>
+  <path d="M78 115H124" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" opacity="0.85"/>
+  <path d="M234 76H279" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" opacity="0.9"/>
+  <path d="M250 108H303" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" opacity="0.72"/>
+</svg>

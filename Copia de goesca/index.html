@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Goesca | Articulos de aseo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="top-bar" aria-label="Barra superior">
+      <button class="top-icon-button menu-toggle" type="button" aria-label="Abrir menu de categorias" data-open-menu>
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <a class="top-brand" href="#main-title" aria-label="Ir al inicio">Goesca</a>
+      <button class="top-icon-button cart-toggle" type="button" aria-label="Ver carrito" data-open-cart>
+        <img class="cart-symbol" src="assets/cart-basket.svg" alt="" aria-hidden="true" />
+        <span class="top-cart-count" id="top-cart-count">0</span>
+      </button>
+    </header>
+
+    <div class="drawer-overlay" data-close-menu></div>
+    <nav class="side-drawer" aria-label="Menu lateral de categorias" id="side-drawer">
+      <div class="side-drawer-header">
+        <strong>Goesca</strong>
+        <button class="drawer-close" type="button" aria-label="Cerrar menu" data-close-menu>×</button>
+      </div>
+      <a class="drawer-link" href="index.html">Inicio</a>
+      <details class="drawer-products" open>
+        <summary>Nuestros productos</summary>
+        <div class="drawer-category-list" data-drawer-categories></div>
+      </details>
+      <a class="drawer-link" href="faq.html">Preguntas frecuentes</a>
+      <a class="drawer-login-card" href="admin.html">Iniciar sesion</a>
+    </nav>
+
+    <main class="page-shell">
+      <section class="brand-hero" aria-labelledby="main-title">
+        <img class="brand-logo" src="assets/logo-goesca.jpg" alt="Logo Goesca" />
+        <h1 id="main-title">Limpieza eficiente para tu hogar, negocio y empresa</h1>
+        <p class="slogan">Limpieza, calidad y confianza</p>
+      </section>
+
+      <section class="photo-carousel" aria-label="Fotos destacadas de Goesca">
+        <div class="carousel-track" id="carousel-track">
+          <figure class="carousel-slide is-active">
+            <img src="assets/carousel-goesca-products.png" alt="Productos de aseo Goesca" />
+            <figcaption>Productos de aseo para tu hogar y negocio</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="shop-area" aria-labelledby="hot-sales-title">
+        <aside class="category-menu" id="categorias" aria-label="Categorias de articulos">
+          <p class="menu-label">Categorias</p>
+          <div class="category-list" id="category-list"></div>
+        </aside>
+
+        <section class="hot-sales" aria-labelledby="hot-sales-title">
+          <div class="section-heading">
+            <div>
+              <p>Ofertas destacadas</p>
+              <h2 id="hot-sales-title">Precio imbatible</h2>
+            </div>
+            <div class="product-tools">
+              <span class="product-count" id="product-count"></span>
+              <label class="product-search" aria-label="Buscar productos">
+                <span aria-hidden="true">⌕</span>
+                <input type="search" id="product-search" placeholder="Buscar producto" />
+              </label>
+            </div>
+          </div>
+          <div class="product-grid" id="product-grid"></div>
+        </section>
+
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <nav class="footer-links" aria-label="Enlaces inferiores">
+        <a href="faq.html">Preguntas frecuentes</a>
+        <a href="faq.html#retiro">Retiro</a>
+        <a href="faq.html#contacto">Contacto</a>
+        <a href="https://maps.app.goo.gl/M8QAmftdqfiFnwHV7" target="_blank" rel="noopener noreferrer">Ubicacion</a>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </nav>
+      <p>Goesca desde 2026</p>
+    </footer>
+
+    <script src="products.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

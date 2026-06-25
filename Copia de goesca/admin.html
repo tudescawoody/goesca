@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin | Goesca</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="top-bar" aria-label="Barra superior">
+      <button class="top-icon-button menu-toggle" type="button" aria-label="Abrir menu de categorias" data-open-menu>
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <a class="top-brand" href="index.html" aria-label="Ir al inicio">Goesca</a>
+      <button class="top-icon-button cart-toggle" type="button" aria-label="Ver carrito" data-open-cart>
+        <img class="cart-symbol" src="assets/cart-basket.svg" alt="" aria-hidden="true" />
+        <span class="top-cart-count" id="top-cart-count">0</span>
+      </button>
+    </header>
+
+    <div class="drawer-overlay" data-close-menu></div>
+    <nav class="side-drawer" aria-label="Menu lateral de categorias" id="side-drawer">
+      <div class="side-drawer-header">
+        <strong>Goesca</strong>
+        <button class="drawer-close" type="button" aria-label="Cerrar menu" data-close-menu>×</button>
+      </div>
+      <a class="drawer-link" href="index.html">Inicio</a>
+      <details class="drawer-products" open>
+        <summary>Nuestros productos</summary>
+        <div class="drawer-category-list" data-drawer-categories></div>
+      </details>
+      <a class="drawer-link" href="faq.html">Preguntas frecuentes</a>
+      <a class="drawer-login-card" href="admin.html">Iniciar sesion</a>
+    </nav>
+
+    <main class="admin-shell">
+      <section class="login-panel" id="login-panel" aria-labelledby="login-title">
+        <div class="admin-heading">
+          <img src="assets/logo-goesca.jpg" alt="Logo Goesca" />
+          <div>
+            <p>Administracion</p>
+            <h1 id="login-title">Inicio de sesion</h1>
+          </div>
+        </div>
+        <form class="login-form" id="login-form">
+          <label>
+            Usuario
+            <input type="text" id="admin-user" autocomplete="username" required />
+          </label>
+          <label>
+            Contraseña
+            <input type="password" id="admin-password" autocomplete="current-password" required />
+          </label>
+          <p class="login-error" id="login-error"></p>
+          <button class="checkout-button" type="submit">Entrar</button>
+        </form>
+      </section>
+
+      <section class="admin-panel is-hidden" id="admin-panel" aria-labelledby="admin-title">
+        <div class="section-heading">
+          <div>
+            <p>Menu de ventas</p>
+            <h1 id="admin-title">Precio imbatible y precios</h1>
+          </div>
+          <button class="logout-button" type="button" id="logout-button">Cerrar sesion</button>
+        </div>
+        <div class="admin-tools">
+          <label>
+            Buscar producto
+            <input type="search" id="admin-search" placeholder="Nombre o categoria" />
+          </label>
+          <button class="admin-tab-button is-active" type="button" data-admin-tab="products">Productos</button>
+          <button class="admin-tab-button" type="button" data-admin-tab="cashier">Caja</button>
+          <button class="admin-tab-button" type="button" data-admin-tab="receipts">Boletas</button>
+          <a class="admin-open-store" href="index.html">Ver tienda</a>
+        </div>
+
+        <div class="admin-view" id="products-view">
+          <details class="new-product-panel">
+            <summary>Añadir producto</summary>
+            <form class="new-product-form" id="new-product-form">
+              <label>
+                Nombre
+                <input type="text" id="new-product-title" required />
+              </label>
+              <label>
+                Categoria
+                <select id="new-product-category"></select>
+              </label>
+              <label>
+                Precio
+                <input type="number" min="0" step="100" id="new-product-price" required />
+              </label>
+              <label>
+                Foto
+                <input type="file" accept="image/*" id="new-product-file" required />
+              </label>
+              <button class="save-product-button" type="submit">Crear producto</button>
+            </form>
+          </details>
+          <div class="admin-product-list" id="admin-product-list"></div>
+        </div>
+
+        <div class="admin-view is-hidden" id="cashier-view">
+          <div class="cashier-layout">
+            <section class="cashier-search-panel" aria-labelledby="cashier-title">
+              <h2 id="cashier-title">Caja</h2>
+              <label>
+                Buscar por nombre o codigo
+                <input type="search" id="cashier-search" placeholder="Ej: limpia, cloro o producto-12" />
+              </label>
+              <div class="cashier-results" id="cashier-results"></div>
+            </section>
+            <section class="cashier-ticket" aria-labelledby="ticket-title">
+              <h2 id="ticket-title">Total a cobrar</h2>
+              <div class="cashier-items" id="cashier-items">
+                <p class="empty-cart">Agrega productos desde el buscador.</p>
+              </div>
+              <div class="cashier-total">
+                <span>Total</span>
+                <strong id="cashier-total">$0</strong>
+              </div>
+              <label class="cashier-paid">
+                Paga con
+                <input type="number" min="0" step="100" id="cashier-paid" placeholder="0" />
+              </label>
+              <div class="cashier-change" id="cashier-change">
+                <span>Vuelto</span>
+                <strong>$0</strong>
+              </div>
+              <button class="save-product-button" type="button" id="confirm-sale">Confirmar venta</button>
+              <button class="reset-product-button" type="button" id="clear-cashier">Limpiar caja</button>
+            </section>
+          </div>
+        </div>
+
+        <div class="admin-view is-hidden" id="receipts-view">
+          <section class="receipts-panel" aria-labelledby="receipts-title">
+            <div class="receipts-heading">
+              <h2 id="receipts-title">Boletas</h2>
+              <button class="reset-product-button" type="button" id="clear-receipts">Limpiar boletas</button>
+            </div>
+            <div class="receipts-list" id="receipts-list">
+              <p class="empty-cart">Aun no hay ventas confirmadas.</p>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <nav class="footer-links" aria-label="Enlaces inferiores">
+        <a href="faq.html">Preguntas frecuentes</a>
+        <a href="faq.html#retiro">Retiro</a>
+        <a href="faq.html#contacto">Contacto</a>
+        <a href="https://maps.app.goo.gl/M8QAmftdqfiFnwHV7" target="_blank" rel="noopener noreferrer">Ubicacion</a>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </nav>
+      <p>Goesca desde 2026</p>
+    </footer>
+
+    <script src="products.js"></script>
+    <script src="admin.js"></script>
+  </body>
+</html>

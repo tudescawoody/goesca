@@ -12,16 +12,27 @@ const formatter = new Intl.NumberFormat("es-CL", {
 
 const cartItems = document.querySelector("#cart-items");
 const cartTotal = document.querySelector("#cart-total");
+const quoteForm = document.querySelector("#quote-form");
 const checkoutButton = document.querySelector("#checkout-button");
+const customerName = document.querySelector("#customer-name");
+const customerPhone = document.querySelector("#customer-phone");
+const quoteStatus = document.querySelector("#quote-status");
 const topCartCount = document.querySelector("#top-cart-count");
 const menuButton = document.querySelector("[data-open-menu]");
 const cartButton = document.querySelector("[data-open-cart]");
 const drawerCategoryList = document.querySelector("[data-drawer-categories]");
 const closeMenuButtons = document.querySelectorAll("[data-close-menu]");
 const cart = new Map(JSON.parse(localStorage.getItem("goesca-cart") || "[]"));
+const callMeBotPhone = "56949417183";
+const callMeBotApiKey = "9926003";
 
 function formatPrice(value) {
   return formatter.format(value);
+}
+
+function formatWhatsappPrice(value) {
+  const amount = Number(value) || 0;
+  return `$${amount.toLocaleString("es-CL")} CLP`;
 }
 
 function getCategoryLabel(category) {
@@ -58,7 +69,7 @@ function getCartSummary() {
       return {
         ...product,
         quantity,
-        subtotal: product.price * quantity,
+        subtotal: Number(product.price) * Number(quantity),
       };
     })
     .filter(Boolean);
@@ -103,14 +114,67 @@ function renderCart() {
   );
 }
 
-function checkoutCart() {
-  const summary = getCartSummary();
-  const totalPrice = summary.reduce((sum, item) => sum + item.subtotal, 0);
-  const lines = summary.map((item) => `- ${item.quantity} x ${item.title}: ${formatPrice(item.subtotal)}`);
-  const message = [`Hola Goesca, quiero cotizar estos productos:`, ...lines, `Total estimado: ${formatPrice(totalPrice)}`].join("\n");
-  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+function clearCart() {
+  cart.clear();
+  saveCart();
+  renderCart();
+}
 
-  window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+async function checkoutCart(event) {
+  event.preventDefault();
+
+  const summary = getCartSummary();
+  // Datos del cliente para poder contactarlo cuando llegue la cotizacion.
+  const clientName = customerName.value.trim();
+  const clientPhone = customerPhone.value.trim();
+
+  if (!summary.length || !clientName || !clientPhone) {
+    return;
+  }
+
+  const totalPrice = summary.reduce((sum, item) => sum + Number(item.subtotal), 0);
+  // Detalle limpio del carrito: producto, cantidad, precio unitario y subtotal.
+  const lines = summary.map((item) => {
+    return [
+      `- ${item.title}`,
+      `  Cantidad: ${item.quantity}`,
+      `  Precio unitario: ${formatWhatsappPrice(item.price)}`,
+      `  Subtotal: ${formatWhatsappPrice(item.subtotal)}`,
+    ].join("\n");
+  });
+  const message = [
+    "Nueva cotizacion Goesca",
+    "",
+    `Cliente: ${clientName}`,
+    `Telefono: ${clientPhone}`,
+    "",
+    "Productos:",
+    ...lines,
+    "",
+    `TOTAL ESTIMADO: ${formatWhatsappPrice(totalPrice)}`,
+  ].join("\n");
+  // CallMeBot requiere el mensaje codificado en la URL.
+  const encodedMessage = encodeURIComponent(message);
+  const callMeBotUrl = `https://api.callmebot.com/whatsapp.php?phone=${callMeBotPhone}&text=${encodedMessage}&apikey=${callMeBotApiKey}`;
+
+  checkoutButton.disabled = true;
+  quoteStatus.textContent = "Enviando cotizacion...";
+
+  try {
+    // no-cors evita que el navegador bloquee la peticion por CORS.
+    await fetch(callMeBotUrl, {
+      method: "GET",
+      mode: "no-cors",
+    });
+
+    quoteStatus.textContent = "Tu cotizacion ha sido enviada con exito. Te contactaremos pronto.";
+    window.alert("Tu cotización ha sido enviada con éxito. Te contactaremos pronto.");
+    clearCart();
+    quoteForm.reset();
+  } catch {
+    quoteStatus.textContent = "No se pudo enviar la cotizacion. Intentalo nuevamente.";
+    checkoutButton.disabled = false;
+  }
 }
 
 cartItems.addEventListener("click", (event) => {
@@ -123,7 +187,7 @@ cartItems.addEventListener("click", (event) => {
   removeFromCart(removeButton.dataset.removeProduct);
 });
 
-checkoutButton.addEventListener("click", checkoutCart);
+quoteForm.addEventListener("submit", checkoutCart);
 menuButton.addEventListener("click", () => {
   document.body.classList.add("menu-is-open");
 });

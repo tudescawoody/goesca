@@ -15,6 +15,7 @@ const sectionCategories = categories.filter((category) => category !== "Todos");
 const categoryTitle = document.querySelector("#category-title");
 const productGrid = document.querySelector("#product-grid");
 const productCount = document.querySelector("#product-count");
+const productSearch = document.querySelector("#product-search");
 const prevCategory = document.querySelector("#prev-category");
 const nextCategory = document.querySelector("#next-category");
 const topCartCount = document.querySelector("#top-cart-count");
@@ -23,9 +24,23 @@ const cartButton = document.querySelector("[data-open-cart]");
 const drawerCategoryList = document.querySelector("[data-drawer-categories]");
 const closeMenuButtons = document.querySelectorAll("[data-close-menu]");
 const cart = new Map(JSON.parse(localStorage.getItem("goesca-cart") || "[]"));
+let searchTerm = "";
 
 function formatPrice(value) {
   return formatter.format(value);
+}
+
+function formatProductDetail(detail) {
+  const parts = detail.split(" · ");
+  const stockPart = parts.find((part) => part.trim().toLowerCase().startsWith("stock:"));
+  const stock = stockPart ? Number.parseInt(stockPart.replace(/\D/g, ""), 10) : Number.NaN;
+  const visibleParts = parts.filter((part) => !part.trim().toLowerCase().startsWith("stock:"));
+
+  if (!Number.isNaN(stock) && stock < 3) {
+    visibleParts.push(`<span class="low-stock">Últimos ${stock}</span>`);
+  }
+
+  return visibleParts.join(" · ");
 }
 
 function getCategoryLabel(category) {
@@ -33,15 +48,24 @@ function getCategoryLabel(category) {
 }
 
 function getVisibleProducts() {
-  if (selectedCategory === "Todos") {
-    return products;
+  if (searchTerm) {
+    return products.filter((product) => {
+      const searchable = `${product.title} ${product.detail} ${product.category} ${product.code || ""}`.toLowerCase();
+      return searchable.includes(searchTerm);
+    });
   }
+
+  let visibleProducts;
 
   if (selectedCategory === "Ofertas") {
-    return products.filter((product) => product.hotSale || product.discount);
+    visibleProducts = products.filter((product) => product.hotSale || product.discount);
+  } else if (selectedCategory === "Todos") {
+    visibleProducts = products;
+  } else {
+    visibleProducts = products.filter((product) => product.category === selectedCategory);
   }
 
-  return products.filter((product) => product.category === selectedCategory);
+  return visibleProducts;
 }
 
 function createProductCard(product) {
@@ -54,7 +78,7 @@ function createProductCard(product) {
     </div>
     <div class="product-body">
       <h3 class="product-title">${product.title}</h3>
-      <p class="product-detail">${product.detail}</p>
+      <p class="product-detail">${formatProductDetail(product.detail)}</p>
       <div class="price-row">
         <span class="price-now">${formatPrice(product.price)}</span>
         <span class="price-before">${formatPrice(product.before)}</span>
@@ -136,7 +160,11 @@ function renderProducts() {
   prevCategory.setAttribute("aria-label", `Ver ${getCategoryLabel(previousCategory)}`);
   nextCategory.href = `category.html?category=${encodeURIComponent(nextCategoryName)}`;
   nextCategory.setAttribute("aria-label", `Ver ${getCategoryLabel(nextCategoryName)}`);
-  productGrid.replaceChildren(...visibleProducts.map(createProductCard));
+  if (!visibleProducts.length) {
+    productGrid.innerHTML = '<p class="empty-cart product-empty">No encontramos productos con esa busqueda.</p>';
+  } else {
+    productGrid.replaceChildren(...visibleProducts.map(createProductCard));
+  }
   productCount.textContent = `${visibleProducts.length} productos`;
 }
 
@@ -170,6 +198,11 @@ productGrid.addEventListener("change", (event) => {
   }
 
   input.value = normalizeQuantity(input.value);
+});
+
+productSearch?.addEventListener("input", () => {
+  searchTerm = productSearch.value.trim().toLowerCase();
+  renderProducts();
 });
 
 menuButton.addEventListener("click", () => {

@@ -48,21 +48,6 @@
             <img src="assets/carousel-goesca-products.png" alt="Productos de aseo Goesca" />
             <figcaption>Productos de aseo para tu hogar y negocio</figcaption>
           </figure>
-          <figure class="carousel-slide">
-            <img src="assets/carousel-2.png" alt="Detergente liquido Bio Frescura" />
-            <figcaption>Lavanderia para el dia a dia</figcaption>
-          </figure>
-          <figure class="carousel-slide">
-            <img src="assets/carousel-3.png" alt="Papel higienico" />
-            <figcaption>Papel y confort para tu negocio</figcaption>
-          </figure>
-        </div>
-        <button class="carousel-button carousel-button-prev" type="button" aria-label="Foto anterior" data-carousel-prev>&lsaquo;</button>
-        <button class="carousel-button carousel-button-next" type="button" aria-label="Foto siguiente" data-carousel-next>&rsaquo;</button>
-        <div class="carousel-dots" aria-label="Seleccionar foto">
-          <button class="carousel-dot is-active" type="button" aria-label="Ver foto 1" data-carousel-dot="0"></button>
-          <button class="carousel-dot" type="button" aria-label="Ver foto 2" data-carousel-dot="1"></button>
-          <button class="carousel-dot" type="button" aria-label="Ver foto 3" data-carousel-dot="2"></button>
         </div>
       </section>
 
@@ -78,7 +63,13 @@
               <p>Ofertas destacadas</p>
               <h2 id="hot-sales-title">Precio imbatible</h2>
             </div>
-            <span class="product-count" id="product-count"></span>
+            <div class="product-tools">
+              <span class="product-count" id="product-count"></span>
+              <label class="product-search" aria-label="Buscar productos">
+                <span aria-hidden="true">⌕</span>
+                <input type="search" id="product-search" placeholder="Buscar producto" />
+              </label>
+            </div>
           </div>
           <div class="product-grid" id="product-grid"></div>
         </section>

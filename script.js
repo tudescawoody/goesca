@@ -11,6 +11,7 @@ const formatter = new Intl.NumberFormat("es-CL", {
 
 const productGrid = document.querySelector("#product-grid");
 const productCount = document.querySelector("#product-count");
+const productSearch = document.querySelector("#product-search");
 const categoryList = document.querySelector("#category-list");
 const topCartCount = document.querySelector("#top-cart-count");
 const menuButton = document.querySelector("[data-open-menu]");
@@ -26,9 +27,23 @@ const cart = new Map(JSON.parse(localStorage.getItem("goesca-cart") || "[]"));
 let activeCategory = "Ofertas";
 let activeSlide = 0;
 let carouselTimer;
+let searchTerm = "";
 
 function formatPrice(value) {
   return formatter.format(value);
+}
+
+function formatProductDetail(detail) {
+  const parts = detail.split(" · ");
+  const stockPart = parts.find((part) => part.trim().toLowerCase().startsWith("stock:"));
+  const stock = stockPart ? Number.parseInt(stockPart.replace(/\D/g, ""), 10) : Number.NaN;
+  const visibleParts = parts.filter((part) => !part.trim().toLowerCase().startsWith("stock:"));
+
+  if (!Number.isNaN(stock) && stock < 3) {
+    visibleParts.push(`<span class="low-stock">Últimos ${stock}</span>`);
+  }
+
+  return visibleParts.join(" · ");
 }
 
 function showSlide(index) {
@@ -44,6 +59,10 @@ function showSlide(index) {
 }
 
 function startCarousel() {
+  if (carouselSlides.length < 2) {
+    return;
+  }
+
   carouselTimer = window.setInterval(() => {
     showSlide(activeSlide + 1);
   }, 4800);
@@ -78,15 +97,24 @@ function renderDrawerCategories() {
 }
 
 function getVisibleProducts() {
-  if (activeCategory === "Todos") {
-    return products;
+  if (searchTerm) {
+    return products.filter((product) => {
+      const searchable = `${product.title} ${product.detail} ${product.category} ${product.code || ""}`.toLowerCase();
+      return searchable.includes(searchTerm);
+    });
   }
+
+  let visibleProducts;
 
   if (activeCategory === "Ofertas") {
-    return products.filter((product) => product.hotSale || product.discount).slice(0, 4);
+    visibleProducts = products.filter((product) => product.hotSale || product.discount).slice(0, 4);
+  } else if (activeCategory === "Todos") {
+    visibleProducts = products;
+  } else {
+    visibleProducts = products.filter((product) => product.category === activeCategory);
   }
 
-  return products.filter((product) => product.category === activeCategory);
+  return visibleProducts;
 }
 
 function createProductCard(product) {
@@ -99,7 +127,7 @@ function createProductCard(product) {
     </div>
     <div class="product-body">
       <h3 class="product-title">${product.title}</h3>
-      <p class="product-detail">${product.detail}</p>
+      <p class="product-detail">${formatProductDetail(product.detail)}</p>
       <div class="price-row">
         <span class="price-now">${formatPrice(product.price)}</span>
         <span class="price-before">${formatPrice(product.before)}</span>
@@ -121,7 +149,11 @@ function createProductCard(product) {
 
 function renderProducts() {
   const visibleProducts = getVisibleProducts();
-  productGrid.replaceChildren(...visibleProducts.map(createProductCard));
+  if (!visibleProducts.length) {
+    productGrid.innerHTML = '<p class="empty-cart product-empty">No encontramos productos con esa busqueda.</p>';
+  } else {
+    productGrid.replaceChildren(...visibleProducts.map(createProductCard));
+  }
   productCount.textContent = `${visibleProducts.length} productos`;
 }
 
@@ -188,12 +220,12 @@ function renderCart() {
   topCartCount.textContent = totalItems;
 }
 
-prevButton.addEventListener("click", () => {
+prevButton?.addEventListener("click", () => {
   showSlide(activeSlide - 1);
   restartCarousel();
 });
 
-nextButton.addEventListener("click", () => {
+nextButton?.addEventListener("click", () => {
   showSlide(activeSlide + 1);
   restartCarousel();
 });
@@ -235,6 +267,11 @@ productGrid.addEventListener("change", (event) => {
   }
 
   input.value = normalizeQuantity(input.value);
+});
+
+productSearch?.addEventListener("input", () => {
+  searchTerm = productSearch.value.trim().toLowerCase();
+  renderProducts();
 });
 
 menuButton.addEventListener("click", () => {

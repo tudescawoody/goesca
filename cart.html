@@ -55,7 +55,18 @@
           <strong id="cart-total">$0</strong>
         </div>
 
-        <button class="checkout-button" id="checkout-button" type="button" disabled>Cotizar carrito</button>
+        <form class="quote-form" id="quote-form">
+          <label>
+            Nombre
+            <input type="text" id="customer-name" autocomplete="name" required />
+          </label>
+          <label>
+            Telefono
+            <input type="tel" id="customer-phone" autocomplete="tel" required />
+          </label>
+          <button class="checkout-button" id="checkout-button" type="submit" disabled>Cotizar carrito</button>
+          <p class="quote-status" id="quote-status" role="status" aria-live="polite"></p>
+        </form>
       </section>
     </main>
 

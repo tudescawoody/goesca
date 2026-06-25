@@ -35,4 +35,3 @@ Abre `index.html` en el navegador.
 - `products.js`: catalogo compartido generado desde las fotos.
 - `assets/`: logo e imagenes del carrusel.
 - `goesca photos/`: fotos usadas para crear los items del catalogo.
-

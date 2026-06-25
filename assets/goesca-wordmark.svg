@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 190" role="img" aria-labelledby="title">
+  <title id="title">GOESCA</title>
+  <defs>
+    <linearGradient id="orange" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#ff9b28" />
+      <stop offset="0.48" stop-color="#f26d12" />
+      <stop offset="1" stop-color="#9f280f" />
+    </linearGradient>
+    <linearGradient id="blue" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#64c6de" />
+      <stop offset="0.5" stop-color="#2682a0" />
+      <stop offset="1" stop-color="#12506a" />
+    </linearGradient>
+    <filter id="shadow" x="-6%" y="-16%" width="112%" height="132%">
+      <feDropShadow dx="0" dy="8" stdDeviation="3" flood-color="#000" flood-opacity="0.45" />
+      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#fff" flood-opacity="0.5" />
+    </filter>
+  </defs>
+  <rect width="980" height="190" fill="none" />
+  <g filter="url(#shadow)" font-family="Arial Black, Impact, sans-serif" font-size="150" font-weight="900" letter-spacing="4">
+    <text x="36" y="144" fill="url(#orange)" stroke="#4a170a" stroke-width="5">GOES</text>
+    <text x="610" y="144" fill="url(#blue)" stroke="#0b3344" stroke-width="5">CA</text>
+  </g>
+  <g font-family="Arial Black, Impact, sans-serif" font-size="150" font-weight="900" letter-spacing="4" fill="none" stroke="#fff" stroke-width="1.4" opacity="0.55">
+    <text x="36" y="139">GOES</text>
+    <text x="610" y="139">CA</text>
+  </g>
+</svg>

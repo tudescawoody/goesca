@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Categoria | Goesca</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="top-bar" aria-label="Barra superior">
+      <button class="top-icon-button menu-toggle" type="button" aria-label="Abrir menu de categorias" data-open-menu>
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <a class="top-brand" href="index.html" aria-label="Ir al inicio">Goesca</a>
+      <button class="top-icon-button cart-toggle" type="button" aria-label="Ver carrito" data-open-cart>
+        <img class="cart-symbol" src="assets/cart-basket.svg" alt="" aria-hidden="true" />
+        <span class="top-cart-count" id="top-cart-count">0</span>
+      </button>
+    </header>
+
+    <div class="drawer-overlay" data-close-menu></div>
+    <nav class="side-drawer" aria-label="Menu lateral de categorias" id="side-drawer">
+      <div class="side-drawer-header">
+        <strong>Goesca</strong>
+        <button class="drawer-close" type="button" aria-label="Cerrar menu" data-close-menu>×</button>
+      </div>
+      <a class="drawer-link" href="index.html">Inicio</a>
+      <details class="drawer-products" open>
+        <summary>Nuestros productos</summary>
+        <div class="drawer-category-list" data-drawer-categories></div>
+      </details>
+      <a class="drawer-link" href="faq.html">Preguntas frecuentes</a>
+      <a class="drawer-login-card" href="admin.html">Iniciar sesion</a>
+    </nav>
+
+    <main class="page-shell category-page-shell">
+      <a class="back-link" href="index.html">Volver a la tienda</a>
+      <section class="hot-sales" aria-labelledby="category-title">
+        <div class="section-heading">
+          <div>
+            <p>Categoria</p>
+            <h1 id="category-title">Productos</h1>
+          </div>
+          <span class="product-count" id="product-count"></span>
+        </div>
+        <div class="category-navigation" aria-label="Cambiar categoria">
+          <a class="category-nav-button" id="prev-category" href="#">&#8249;</a>
+          <a class="category-nav-button" id="next-category" href="#">&#8250;</a>
+        </div>
+        <div class="product-grid" id="product-grid"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <nav class="footer-links" aria-label="Enlaces inferiores">
+        <a href="faq.html">Preguntas frecuentes</a>
+        <a href="faq.html#retiro">Retiro</a>
+        <a href="faq.html#contacto">Contacto</a>
+        <a href="https://maps.app.goo.gl/M8QAmftdqfiFnwHV7" target="_blank" rel="noopener noreferrer">Ubicacion</a>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </nav>
+      <p>Goesca desde 2026</p>
+    </footer>
+
+    <script src="products.js"></script>
+    <script src="category.js"></script>
+  </body>
+</html>
